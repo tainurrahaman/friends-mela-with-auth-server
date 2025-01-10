@@ -29,6 +29,12 @@ async function run() {
 
     const friendCollection = client.db("friendsDB").collection("friends");
 
+    app.get("/friends", async (req, res) => {
+      const cursor = friendCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     app.post("/friends", async (req, res) => {
       const friend = req.body;
       const result = await friendCollection.insertOne(friend);
