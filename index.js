@@ -41,6 +41,19 @@ async function run() {
       res.send(result);
     });
 
+    app.patch("/friends", async (req, res) => {
+      const email = req.body.email;
+      const filter = { email };
+      const updateFriend = {
+        $set: {
+          lastSignInTime: req?.body?.lastSignInTime,
+        },
+      };
+      const result = await friendCollection.updateOne(filter, updateFriend);
+
+      res.send(result);
+    });
+
     app.delete("/friends/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
